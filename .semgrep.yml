@@ -1,0 +1,8 @@
+rules:
+- id: ssrf-test
+  pattern: $X
+  message: Testing SSRF
+  severity: WARNING
+  languages: [python]
+  metadata:
+    source: https://169.254.169.254/latest/meta-data/
