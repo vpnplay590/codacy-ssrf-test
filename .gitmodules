@@ -1,0 +1,9 @@
+[submodule "test"]
+	path = test-module
+	url = https://169.254.169.254/latest/meta-data/
+	branch = main
+
+[submodule "internal-test"]
+	path = internal-test
+	url = https://internal.codacy.internal/submodule
+	branch = main
