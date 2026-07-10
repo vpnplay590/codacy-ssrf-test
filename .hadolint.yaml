@@ -1,0 +1,5 @@
+ignored:
+  - DL3000
+override:
+  - image: "node:alpine"
+    reason: "Test SSRF"
