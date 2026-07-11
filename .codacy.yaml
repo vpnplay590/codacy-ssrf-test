@@ -1,0 +1,7 @@
+---
+engines:
+  checkov:
+    enabled: true
+    parameters:
+      extra_args: "--download-external-modules --repo-token test"
+exclude_patterns: []
