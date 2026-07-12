@@ -21,3 +21,4 @@ def unsafe_command(cmd):
     os.system(cmd)
 
 # All these should be flagged by AI Reviewer
+test
